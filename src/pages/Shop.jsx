@@ -14,14 +14,14 @@ const Shop = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        // Aapke backend se data fetch karne ki koshish
-        const response = await axios.get('http://localhost:8000/api/products');
+        // try to fetch dat from backend
+        const response = await axios.get(`https://scentsation-backend-orpin.vercel.app/api/products/${id}`);
         
-        // Agar backend se array mila aur usme products hain to wo set karein
+        
         if (response.data && response.data.length > 0) {
           setProducts(response.data);
         } else {
-          // Agar database khali hai to dummy data set kar dein
+          // if data base empty delete data from dummy
           setProducts(dummyProducts);
         }
         setLoading(false);
@@ -87,7 +87,7 @@ const Shop = () => {
         </div>
       </div>
 
-      {/* 🛒 Real Products Grid */}
+      {/*  Real Products Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
         {filteredProducts.map(product => (
           <ProductCard key={product._id} product={product} />

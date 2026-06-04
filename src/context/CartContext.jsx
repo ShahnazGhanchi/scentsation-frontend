@@ -26,7 +26,7 @@ export const CartProvider = ({ children }) => {
       
       return [...prevItems, { ...product, quantity: 1 }];
     });
-  }; // <-- addToCart yahan perfect close ho gaya
+  }; 
       
   // 2. Remove Item from Cart
   const removeFromCart = (id) => {

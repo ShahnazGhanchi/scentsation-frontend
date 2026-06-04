@@ -69,7 +69,7 @@ const AdminDashboard = () => {
       data.append("image", imageFile);
 
       const response = await axios.post(
-        "http://localhost:8000/api/products",
+        "https://scentsation-backend-orpin.vercel.app",
         data,
         {
           headers: {

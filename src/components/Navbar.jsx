@@ -6,13 +6,13 @@ import { CartContext } from '../context/CartContext'; // <-- Import CartContext
 const Navbar = () => {
     const { cartCount,cartItems } = useContext(CartContext);
     
-     // <-- Cart count uthayein global state se
+     // <-- Cart count global state se
   return (
     <nav className="bg-white text-gray-900 sticky top-0 z-50 shadow-md border-b-2 border-amber-500/30 py-2">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div className="flex items-center justify-between h-20">
           
-          {/* Left Side: Brand Logo - Bada aur Saaf */}
+          {/* Left Side: Brand Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex flex-col items-start group">
               <span className="text-2xl md:text-3xl font-serif tracking-[0.15em] font-extrabold text-slate-900 group-hover:text-amber-600 transition-colors duration-300">
@@ -24,7 +24,7 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Center: Navigation Links - Bare aur Clear */}
+          {/* Center: Navigation Links -  */}
           <div className="flex space-x-10 text-base font-bold tracking-wide text-slate-700">
             <Link to="/" className="hover:text-amber-600 hover:scale-105 transition-all duration-200 py-2">
               Home
@@ -34,7 +34,7 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Right Side: Icons Menu - Bare Icons aur Solid Badges */}
+          {/* Right Side: Icons Menu - */}
           <div className="flex items-center space-x-6">
             
             {/* Wishlist Icon */}
