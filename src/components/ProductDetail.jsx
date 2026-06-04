@@ -14,18 +14,20 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const res = await axios.get(
-          `https://scentsation-backend-orpin.vercel.app/api/products/${id}`
-        );
-        setProduct(res.data);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
-      }
-    };
+   const fetchProduct = async () => {
+  try {
+    setLoading(true);
+    // 1. Axios ki jagah apna banaya hua 'API' instance use karen
+    // 2. Localhost hata kar sirf aage ka path backticks me rehne dein
+    const res = await API.get(`/api/products/${id}`);
+    setProduct(res.data);
+  } catch (err) {
+    console.error("Backend se connect nahi ho saka, error:", err);
+    
+  } finally {
+    setLoading(false);
+  }
+};
 
     fetchProduct();
   }, [id]);
