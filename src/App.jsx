@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Shop from "./pages/Shop";
@@ -27,13 +28,13 @@ const Home = () => {
 
         {/* Explore Button */}
         <div className="mt-8">
-          <a
-            href="/shop"
-            className="bg-amber-600 hover:bg-amber-600 text-white px-8 py-3 rounded-xl font-semibold transition"
-          >
-            Explore Collection
-          </a>
-        </div>
+      <Link
+    to="/shop"
+    className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded-xl font-semibold transition inline-block"
+  >
+    Explore Collection
+  </Link>
+</div>
 
       </div>
 
