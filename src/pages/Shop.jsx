@@ -3,6 +3,34 @@ import axios from 'axios';
 import ProductCard from '../components/ProductCard.jsx';
 import { Link } from "react-router-dom";
 
+// Fallback Dummy Data (Agar backend down ho ya empty ho to ye show hoga)
+const dummyProducts = [
+  {
+    _id: "d1",
+    name: "Royal Oud Luxury",
+    category: "Men",
+    price: 120,
+    image: "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=500&q=80",
+    description: "Deep woody and premium oriental scent."
+  },
+  {
+    _id: "d2",
+    name: "Rose Élysée",
+    category: "Women",
+    price: 95,
+    image: "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=500&q=80",
+    description: "Fresh blooming french roses and vanilla."
+  },
+  {
+    _id: "d3",
+    name: "Oceanic Breeze",
+    category: "Unisex",
+    price: 85,
+    image: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=500&q=80",
+    description: "Crisp sea salt combined with citrus notes."
+  }
+];
+
 const Shop = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,19 +42,19 @@ const Shop = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        // try to fetch dat from backend
-        const response = await axios.get(`https://scentsation-backend-orpin.vercel.app/api/products/${id}`);
-        
+        // FIXED: URL se `/${id}` hata diya hai taake saare products load hon
+        const response = await axios.get('https://scentsation-backend-orpin.vercel.app/api/products');
         
         if (response.data && response.data.length > 0) {
           setProducts(response.data);
         } else {
-          // if data base empty delete data from dummy
+          // if database empty, use dummy data
+          console.log("Database empty hai, dummy products loading...");
           setProducts(dummyProducts);
         }
         setLoading(false);
       } catch (err) {
-        console.log("Backend se connect nahi ho saka, using dummy products fallback.");
+        console.log("Backend se connect nahi ho saka, using dummy products fallback.", err);
         // Agar backend chal hi nahi raha, tab bhi project chalta rahe
         setProducts(dummyProducts);
         setLoading(false);
@@ -37,7 +65,10 @@ const Shop = () => {
 
   // Filtering & Sorting Logic
   const filteredProducts = products
-    .filter(product => category === 'All' ? true : product.category.toLowerCase() === category.toLowerCase())
+    .filter(product => {
+      if (!product || !product.category) return false;
+      return category === 'All' ? true : product.category.toLowerCase() === category.toLowerCase();
+    })
     .sort((a, b) => {
       if (sortBy === 'low-to-high') return a.price - b.price;
       if (sortBy === 'high-to-low') return b.price - a.price;
@@ -58,7 +89,7 @@ const Shop = () => {
       {/* Filter Options */}
       <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-white p-5 rounded-xl shadow-sm border border-gray-100 mb-10">
         <div className="flex gap-3">
-          {['All', 'Men', 'Women','Unisex'].map((cat) => (
+          {['All', 'Men', 'Women', 'Unisex'].map((cat) => (
             <button
               key={cat}
               onClick={() => setCategory(cat)}
@@ -87,12 +118,16 @@ const Shop = () => {
         </div>
       </div>
 
-      {/*  Real Products Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
-        {filteredProducts.map(product => (
-          <ProductCard key={product._id} product={product} />
-        ))}
-      </div>
+      {/* Real Products Grid */}
+      {filteredProducts.length === 0 ? (
+        <div className="text-center py-10 text-gray-500 font-medium">Is category mein koi products nahi hain.</div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
+          {filteredProducts.map(product => (
+            <ProductCard key={product._id} product={product} />
+          ))}
+        </div>
+      )}
 
     </div>
   );
