@@ -29,7 +29,7 @@ const Home = () => {
         {/* Explore Button */}
         <div className="mt-8">
       <Link
-    to="/shop"
+    to="/Shop"
     className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded-xl font-semibold transition inline-block"
   >
     Explore Collection
